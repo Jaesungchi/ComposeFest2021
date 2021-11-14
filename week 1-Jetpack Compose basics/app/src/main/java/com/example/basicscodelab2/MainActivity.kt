@@ -3,9 +3,15 @@ package com.example.basicscodelab2
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,10 +29,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/*
+    remember 변수는 저장이 안되서, 화면 회전같은 동작을 하면 사라진다.
+    rememberSaveable 이건 저장 쌉가능.
+    오... 데이터 저장이 이렇게 쉽게 되네.
+ */
 @Composable
 fun MyApp() {
     //자기보다 상위 메소드의 state 를 받아올 수 있다.
-    var shouldShowOnboarding by remember { mutableStateOf(true) }
+    var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
 
     if (shouldShowOnboarding) {
         OnboardingScreen(onContinueClicked = { shouldShowOnboarding = false })
@@ -35,10 +46,20 @@ fun MyApp() {
     }
 }
 
+/*
+    LazyColumn and LazyRow are equivalent to RecyclerView in Android Views.
+    오 레이지 붙은 칼럼이나 로우는 리사이클러뷰처럼 활용가능.
+
+    Note: LazyColumn doesn't recycle its children like RecyclerView.
+    It emits new Composables as you scroll through it and is still performant,
+    as emitting Composables is relatively cheap compared to instantiating Android Views.
+
+    아이고 재활용은 안하네 그런데 컴포즈가 뷰를 구성하는 비용이 매우 저렴해서 뷰홀더를 쓰지 않아도 좋다고 함.
+ */
 @Composable
-private fun Greetings(names: List<String> = listOf("World", "Compose")) {
-    Column(modifier = Modifier.padding(vertical = 4.dp)) {
-        for (name in names) {
+private fun Greetings(names: List<String> = List(1000) { "$it" } ) {
+    LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
+        items(items = names) { name ->
             Greeting(name = name)
         }
     }
@@ -47,8 +68,16 @@ private fun Greetings(names: List<String> = listOf("World", "Compose")) {
 @Composable
 private fun Greeting(name: String) {
     //라이브 데이터 느낌.
-    var expanded = remember { mutableStateOf(false) }
-    val extraPadding = if (expanded.value) 48.dp else 0.dp
+    var expanded by remember { mutableStateOf(false) }
+
+    val extraPadding by animateDpAsState(
+        if (expanded) 48.dp else 0.dp,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        )
+    )
+
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
@@ -62,9 +91,9 @@ private fun Greeting(name: String) {
                 Text(text = name)
             }
             OutlinedButton(
-                onClick = { expanded.value = !expanded.value }
+                onClick = { expanded = !expanded }
             ) {
-                Text(if (expanded.value) "Show less" else "Show more")
+                Text(if (expanded) "Show less" else "Show more")
             }
         }
     }
