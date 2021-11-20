@@ -10,8 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d4d5a9f4-8a1e-49b3-8e52-39995991e565" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/codelab/theming/ui/start/theme/Theme.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/codelab/theming/ui/start/Home.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/codelab/theming/ui/start/Home.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,10 +57,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/java/com/codelab/theming/ui/start" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/java/com/codelab/theming/ui/start/theme" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/codelab/theming/ui/start/theme" />
       <recent name="$PROJECT_DIR$/app/src/main/java/com/codelab/theming/ui/start" />
     </key>
   </component>
