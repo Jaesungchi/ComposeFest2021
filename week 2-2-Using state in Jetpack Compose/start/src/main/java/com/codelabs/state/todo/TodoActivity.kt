@@ -44,10 +44,21 @@ class TodoActivity : AppCompatActivity() {
 
 @Composable
 private fun TodoActivityScreen(todoViewModel: TodoViewModel) {
-    val items: List<TodoItem> by todoViewModel.todoItems.observeAsState(listOf())// in the next steps we'll complete this
+//    val items: List<TodoItem> by todoViewModel.todoItems.observeAsState(listOf())// in the next steps we'll complete this
+//    TodoScreen(
+//        items = items,
+//        onAddItem = { todoViewModel.addItem(it) }, // in the next steps we'll complete this
+//        onRemoveItem = { todoViewModel.removeItem(it) } // in the next steps we'll complete this
+//    )
+    // 위에서 아래로 바꿈, 왜냐? 뷰모델에 라이브데이터를 안쓰고 뷰모델 자체를 쓰게함.
     TodoScreen(
-        items = items,
-        onAddItem = { todoViewModel.addItem(it) }, // in the next steps we'll complete this
-        onRemoveItem = { todoViewModel.removeItem(it) } // in the next steps we'll complete this
+        items = todoViewModel.todoItems,
+        currentlyEditing = todoViewModel.currentEditItem,
+        onAddItem = todoViewModel::addItem,
+        onRemoveItem = todoViewModel::removeItem,
+        onStartEdit = todoViewModel::onEditItemSelected,
+        onEditItemChange = todoViewModel::onEditItemChange,
+        onEditDone = todoViewModel::onEditDone
     )
+
 }
